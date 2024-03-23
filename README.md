@@ -116,5 +116,10 @@ Refactoring kode di atas diperlukan agar kode di if else benar-benar dibedakan d
 Screenshot halaman hello.html dan cmd
 ![Commit 3 screen capture](/assets/Commit3.png)
 
+#### Commit 4 Reflection notes
+Kode handle_connection yang terbaru menggunakan pola pencocokan (match)untuk memeriksa jenis permintaan yang diterima. Jika permintaannya adalah GET/HTTP/1.1,maka status line menjadi HTTP/1.1 200 OK dan nama file yang dibaca adalah hello.html.<br>
+
+Jika permintaan adalah GET/sleepHTTP/1.1,maka akan dilakukan penundaan selama 5 detik menggunakan thread::sleep, kemudian status HTTP/1.1 200 OK dan nama file yang dibaca tetap hello.html. Jika permintaan tidak cocok dengan keduanya, makan line nya adalah HTTP/1.1 404 NOT FOUND dan file yang dibaca adalah 404.html.
+
 
 
