@@ -4,7 +4,7 @@
 
 ### Modul_6
 
-#### Reflection 1
+#### Commit 1 Reflection notes
 ```rust
 fn handle_connection(mut stream: TcpStream) { 
     let buf_reader = BufReader::new(&mut stream);
@@ -46,6 +46,34 @@ Penjelasan Kode:<br>
     
 Kesimpulan: <br>
 Fungsi handle_connection membaca request HTTP dari koneksi TCP yang diberikan dan mencetak hasil-hasilnya ke konsol.
+
+#### Commit 2 Reflection notes
+
+Fungsi handle_connection yang dikerjakan pada commit 2 kali ini adalah implementasi sederhana dari fungsi untuk menangani koneksi TCP dan mengirimkan respons HTTP.
+
+    ```rust
+    fn handle_connection(mut stream: TcpStream) {
+        let buf_reader = BufReader::new(&mut stream); 
+        let http_request: Vec<_> = buf_reader
+            .lines() 
+            .map(|result| result.unwrap()) 
+            .take_while(|line| !line.is_empty())
+            .collect();
+
+        let status_line = "HTTP/1.1 200 OK"; let contents = fs::read_to_string("hello.html").unwrap(); let length = contents.len();
+        let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+
+        stream.write_all(response.as_bytes()).unwrap();
+    }
+    ```
+Fungsi tersebut mengambil parameter stream yang mewakili koneksi TCP yang aktif. Buf_reader digunakan untukmembaca data dari stream.Data tersebut dibaca menggunakan lines() dan dimap dengan mengabaikan kemungkinan kesalahan.take_while digunakan untuk mengambilsetiap baris sampai menemukan baris kosong.<br>
+
+Setelahpermintaan HTTP dibaca, kode melanjutkan untuk menyiapkan respons HTTP.status line diberikan sebagai "HTTP/1.1 200 OK". Kemudian, isi file hello.html dibaca dengan telah diasumsikan bahwa file hello.html memang bisa dibaca oleh program. Panjang konten dibaca dengan variabel length.<br>
+
+Respon HTTP disusun menggunakan format status line diikuti oleh Content-Length, dan diikuti lagi oleh dua baris kosong untuk menandai akhir header dan diikuti oleh isi dari hello.html. Terakhir,respon yang telah disusun dikirimkan melalui stream menggunakan write_all.
+
+Screenshot halaman hello.hmtl dan cmd rust
+![Commit 2 screen capture](/assets/Commit2.png)
 
 
 
